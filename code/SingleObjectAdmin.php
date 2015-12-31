@@ -23,7 +23,6 @@ class SingleObjectAdmin extends LeftAndMain implements PermissionProvider
 
     public function providePermissions()
     {
-
         return array(
             "CMS_ACCESS_SingleObjectAdmin" => array(
                 'name' => "Access to Single Object Administration",
@@ -70,19 +69,24 @@ class SingleObjectAdmin extends LeftAndMain implements PermissionProvider
         )->setHTMLID('Form_EditForm');
         $form->setResponseNegotiator($this->getResponseNegotiator());
         $form->addExtraClass('cms-content center cms-edit-form');
-        if ($form->Fields()->hasTabset()) $form->Fields()->findOrMakeTab('Root')->setTemplate('CMSTabSet');
+        if ($form->Fields()->hasTabset()) {
+            $form->Fields()->findOrMakeTab('Root')->setTemplate('CMSTabSet');
+        }
         $form->setHTMLID('Form_EditForm');
         $form->loadDataFrom($object);
         $form->setTemplate($this->getTemplatesWithSuffix('_EditForm'));
 
         // Use <button> to allow full jQuery UI styling
         $actions = $actions->dataFields();
-        if ($actions) foreach ($actions as $action) $action->setUseButtonTag(true);
+        if ($actions) {
+            foreach ($actions as $action) {
+                $action->setUseButtonTag(true);
+            }
+        }
 
         $this->extend('updateEditForm', $form);
 
         return $form;
-
     }
 
     public function EditForm($request = null)
@@ -233,5 +237,4 @@ class SingleObjectAdmin extends LeftAndMain implements PermissionProvider
 
         Versioned::reading_stage($currentStage);
     }
-
 }
